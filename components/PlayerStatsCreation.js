@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import { TouchableOpacity, Image } from 'react-native';
 
-const PlayerStats = (props) => {
+const PlayerStatsCreation = (props) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.button} onPress={() => props.dispatch({statToChange: props.name, amount: -1})}>
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlayerStats;
+export default PlayerStatsCreation;
