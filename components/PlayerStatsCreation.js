@@ -4,11 +4,11 @@ import { TouchableOpacity, Image } from 'react-native';
 const PlayerStatsCreation = (props) => {
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={() => props.dispatch({statToChange: props.name, amount: -1})}>
+            <TouchableOpacity style={styles.button} onPress={() => props.dispatch({type: 'changeStat', statToChange: props.name, amount: -1})}>
                 <Image style={styles.image} source={require('../assets/SampleHW2Assets/minusSign.png')} />
             </TouchableOpacity>
             <Text style={styles.text}>Current {props.name}: {props.value}</Text>
-            <TouchableOpacity style={styles.button} onPress={() => props.dispatch({statToChange: props.name, amount: 1})}>
+            <TouchableOpacity style={styles.button} onPress={() => props.dispatch({type: 'changeStat', statToChange: props.name, amount: 1})}>
                 <Image style={styles.image} source={require('../assets/SampleHW2Assets/plusSign.png')} />
             </TouchableOpacity>
         </View>

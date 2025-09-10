@@ -12,21 +12,21 @@ const CombatScreen = () => {
                 <MonsterStatsCombat state={state} dispatch={dispatch}/>
                 <PlayerStatsCombat state={state} dispatch={dispatch}/>
             </View>
-            <Image style={styles.image} source={require('../assets/SampleHW2Assets/alienWizard.png')} />
-            <Text style={styles.text}>Alien Wizard!</Text>
+            <Image style={styles.enemyImage} source={require('../assets/SampleHW2Assets/alienWizard.png')} />
+            <Text style={styles.enemyTitle}>Alien Wizard!</Text>
             <View style={styles.log}>
                 <Text style={styles.text}>A dangerous foe draws near!</Text>
             </View>
-            <View>
-                <Text style={styles.text}>How do you defend thyself?</Text>
-                <TouchableOpacity style={styles.button} onPress={() => props.dispatch({statToChange: props.name, amount: -1})}>
-                    <Image style={styles.image} source={require('../assets/SampleHW2Assets/attackIcon.png')} />
+            <Text style={styles.text}>How do you defend thyself?</Text>
+            <View style={styles.actionOptions}>
+                <TouchableOpacity style={styles.button} onPress={() => dispatch({type: "attack"})}>
+                    <Image style={styles.actionImages} source={require('../assets/SampleHW2Assets/attackIcon.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => props.dispatch({statToChange: props.name, amount: -1})}>
-                    <Image style={styles.image} source={require('../assets/SampleHW2Assets/fireIcon.png')} />
+                <TouchableOpacity style={styles.button} onPress={() => dispatch({type: "fire"})}>
+                    <Image style={styles.actionImages} source={require('../assets/SampleHW2Assets/fireIcon.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => props.dispatch({statToChange: props.name, amount: -1})}>
-                    <Image style={styles.image} source={require('../assets/SampleHW2Assets/healIcon.png')} />
+                <TouchableOpacity style={styles.button} onPress={() => dispatch({type: "heal"})}>
+                    <Image style={styles.actionImages} source={require('../assets/SampleHW2Assets/healIcon.png')} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -43,10 +43,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
+        alignSelf: 'flex-start',
+        padding: 10,
+    },
+    enemyTitle: {
         fontSize: 30,
         textAlign: 'center',
     },
-    image: {
+    enemyImage: {
         // width: '50%',
         // height: '50%',
         resizeMode: 'contain',
@@ -58,6 +62,12 @@ const styles = StyleSheet.create({
         width: '95%',
         height: '20%',
         marginTop: 20,
+    },
+    actionOptions: {
+        flexDirection: 'row',
+    },
+    actionImages: {
+        margin: 30,
     }
 });
 

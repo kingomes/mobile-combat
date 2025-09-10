@@ -11,33 +11,58 @@ const initialState = {
 };
 
 function gameReducer(state, action) {
-  switch(action.statToChange) {
+  switch(action.type) {
+    case 'changeStat': {
+      switch(action.statToChange) {
         case 'playerStrength':
-            if (state.points - action.amount < 0 || state.playerStrength + action.amount < 1) {
-                return state;
-            }
-            return {
-                ...state,
-                playerStrength: state.playerStrength + action.amount, 
-                points: state.points - action.amount};
-        case 'playerHealth':
-            if (state.points - action.amount < 0 || state.playerHealth + action.amount < 1) {
-                return state;
-            }
-            return {
-                ...state, 
-                playerHealth: state.playerHealth + action.amount,
-                points: state.points - action.amount};
-        case 'playerMagic':
-            if (state.points - action.amount < 0 || state.playerMagic + action.amount < 1) {
-                return state;
-            }
-            return {
-                ...state, 
-                playerMagic: state.playerMagic + action.amount,
-                points: state.points - action.amount};
-        default:
+          if (state.points - action.amount < 0 || state.playerStrength + action.amount < 1) {
             return state;
+          }
+          return {
+            ...state,
+            playerStrength: state.playerStrength + action.amount,
+            points: state.points - action.amount
+          };
+        case 'playerHealth':
+          if (state.points - action.amount < 0 || state.playerHealth + action.amount < 1) {
+            return state;
+          }
+          return {
+            ...state,
+            playerHealth: state.playerHealth + action.amount,
+            points: state.points - action.amount
+          };
+        case 'playerMagic':
+          if (state.points - action.amount < 0 || state.playerMagic + action.amount < 1) {
+            return state;
+          }
+          return {
+            ...state,
+            playerMagic: state.playerMagic + action.amount,
+            points: state.points - action.amount
+          };
+        default:
+          return state;
+      }
+    }
+    case 'attack':
+      return {
+        ...state,
+        monsterHealth: state.monsterHealth - state.playerStrength
+      };
+    case 'fire':
+      return {
+        ...state,
+        monsterHealth: state.monsterHealth / 2.0
+      };
+    case 'heal':
+      return {
+        ...state,
+        playerHealth: state.playerHealth + 7,
+        playerMagic: state.playerMagic - 1
+      };
+    default:
+      return state;
   }
 }
 
