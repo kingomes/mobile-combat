@@ -13,7 +13,7 @@ const CharacterCreationScreen = ({navigation}) => {
             <PlayerStatsCreation name="playerHealth" value={state.playerHealth} dispatch={dispatch}/>
             <PlayerStatsCreation name="playerMagic" value={state.playerMagic} dispatch={dispatch}/>
             <Text style={styles.text}>Points remaining: {state.points}</Text>
-            <CompleteCharacterCreation name="points" value={state.points} navigation={navigation}/>
+            <CompleteCharacterCreation name="points" state={state} navigation={navigation}/>
         </View>
     )
 }

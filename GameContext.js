@@ -1,13 +1,22 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
 const initialState = {
-    playerStrength: 1,
-    playerHealth: 10,
-    playerMagic: 1,
-    points: 15,
-    monsterStrength: 1,
+  playerStrength: 1,
+  playerHealth: 10,
+  playerMagic: 1,
+  points: 15,
+  lastAction: null,
+  currentMonster: 1,
+  monster1: {
+    monsterStrength: 2,
     monsterHealth: 10,
-    monsterMagic: 1
+    monsterMagic: 5
+  },
+  monster2: {
+    strength: 2,
+    health: 20,
+    defense: 5
+  }
 };
 
 function gameReducer(state, action) {
@@ -45,24 +54,109 @@ function gameReducer(state, action) {
           return state;
       }
     }
-    case 'attack':
-      return {
-        ...state,
-        monsterHealth: state.monsterHealth - state.playerStrength
-      };
-    case 'fire':
-      return {
-        ...state,
-        monsterHealth: state.monsterHealth / 2.0
-      };
-    case 'heal':
-      return {
-        ...state,
-        playerHealth: state.playerHealth + 7,
-        playerMagic: state.playerMagic - 1
-      };
-    default:
+    case 'attack': {
+        const monsterKey = state.currentMonster === 1 ? 'monster1' : 'monster2';
+        const m = state[monsterKey];
+
+        const monsterHealth = monsterKey === 'monster1' ? m.monsterHealth : m.health;
+        const monsterStrength = monsterKey === 'monster1' ? m.monsterStrength : m.strength;
+        const monsterDefense = monsterKey === 'monster1' ? 0 : m.defense;
+
+        const damage = Math.max(0, state.playerStrength - monsterDefense);
+        if (state.playerHealth <= 0 || monsterHealth <= 0) {
+            return state;
+        }
+
+        if (state.playerHealth - monsterStrength < 0) {
+            return {
+              ...state,
+              [monsterKey]: {
+                ...m,
+                ...(monsterKey === 'monster1' ? { monsterHealth: monsterHealth - damage } : { health: monsterHealth - damage })
+              },
+              playerHealth: 0,
+              lastAction: 'attack'
+            };
+        }
+
+        if (monsterHealth - damage <= 0) {
+            return {
+              ...state,
+              [monsterKey]: {
+                ...m,
+                ...(monsterKey === 'monster1' ? { monsterHealth: 0 } : { health: 0 })
+              },
+              playerHealth: state.playerHealth - monsterStrength,
+              lastAction: 'attack',
+              points: state.points + 5
+            };
+        }
+
+        return {
+            ...state,
+            [monsterKey]: {
+              ...m,
+              ...(monsterKey === 'monster1' ? { monsterHealth: monsterHealth - damage } : { health: monsterHealth - damage })
+            },
+            playerHealth: state.playerHealth - monsterStrength,
+            lastAction: 'attack'
+        };
+    }
+    case 'fire': {
+        const monsterKey = state.currentMonster === 1 ? 'monster1' : 'monster2';
+        const m = state[monsterKey];
+        const monsterHealth = monsterKey === 'monster1' ? m.monsterHealth : m.health;
+        const monsterStrength = monsterKey === 'monster1' ? m.monsterStrength : m.strength;
+
+        if (state.playerMagic - 3 < 0 || state.playerHealth - monsterStrength <= 0 || monsterHealth <= 0) {
+            return state;
+        }
+        if (monsterHealth / 2.0 < 0) {
+            return {
+              ...state,
+              [monsterKey]: {
+                ...m,
+                ...(monsterKey === 'monster1' ? { monsterHealth: 0 } : { health: 0 })
+              },
+              playerMagic: state.playerMagic - 3,
+              playerHealth: state.playerHealth - monsterStrength,
+              lastAction: 'fire',
+              points: state.points + 5
+            };
+        }
+        return {
+            ...state,
+            [monsterKey]: {
+              ...m,
+              ...(monsterKey === 'monster1' ? { monsterHealth: monsterHealth / 2.0 } : { health: monsterHealth / 2.0 })
+            },
+            playerMagic: state.playerMagic - 3,
+            playerHealth: state.playerHealth - monsterStrength,
+            lastAction: 'fire'
+        };
+    }
+  case 'heal': {
+    const monsterKey = state.currentMonster === 1 ? 'monster1' : 'monster2';
+    const m = state[monsterKey];
+    const monsterStrength = monsterKey === 'monster1' ? m.monsterStrength : m.strength;
+    const monsterHealth = monsterKey === 'monster1' ? m.monsterHealth : m.health;
+    if (state.playerMagic - 1 < 0 || state.playerHealth + 7 < 1 || state.playerHealth - monsterStrength <= 0 || monsterHealth <= 0) {
       return state;
+    }
+    return {
+      ...state,
+      playerHealth: state.playerHealth + 7,
+      playerMagic: state.playerMagic - 1,
+      lastAction: 'heal'
+    };
+  }
+  
+  case 'resetStats':
+    return { ...initialState };
+  case 'nextMonster':
+    return { ...state, currentMonster: 2 };
+  default:
+    return state;
   }
 }
 

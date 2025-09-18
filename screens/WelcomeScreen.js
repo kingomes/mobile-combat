@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 const WelcomeScreen = ({navigation}) => {
-  return ( // Add a better font for the game's title
+  return (
     <View style={styles.container}>
       <Text style={styles.text}>Fight For Glory!</Text>
       <Image style={styles.image} source={require('../assets/SampleHW2Assets/swordAndShield.jpg')} />

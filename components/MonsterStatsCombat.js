@@ -1,14 +1,28 @@
 import {View, Text, StyleSheet} from 'react-native';
 
 const MonsterStatsCombat = (props) => {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Monster Stats</Text>
-            <Text style={styles.text}>Health: {props.state.monsterHealth}</Text>
-            <Text style={styles.text}>Strength: {props.state.monsterStrength}</Text>
-            <Text style={styles.text}>Magic: {props.state.monsterMagic}</Text>
-        </View>
-    )
+    const monster = props.state.currentMonster === 1 ? props.state.monster1 : props.state.monster2;
+
+    if (monster === props.state.monster1) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.text}>Monster Stats</Text>
+                <Text style={styles.text}>Health: {monster.monsterHealth}</Text>
+                <Text style={styles.text}>Strength: {monster.monsterStrength}</Text>
+                <Text style={styles.text}>Magic: {monster.monsterMagic}</Text>
+            </View>
+        )
+    }
+    else if (monster === props.state.monster2) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.text}>Monster Stats</Text>
+                <Text style={styles.text}>Health: {monster.health}</Text>
+                <Text style={styles.text}>Strength: {monster.strength}</Text>
+                <Text style={styles.text}>Defense: {monster.defense}</Text>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
