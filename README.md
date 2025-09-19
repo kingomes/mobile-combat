@@ -1,0 +1,4 @@
+# Omar Essa (oessa@uno.edu)
+## The Bells and Whistles that I went for are "Monster Variety" and "What's in a Name". My stick man that I created for the "Monster Variety" Bell and Whistle also had a different ability (defense instead of magic), so I am not sure if that counts as the "More Dastardly Monsters" Bells and Whistles assignment.
+## The artwork I used included the ones the professor had in his slides, and I also made my stickman art using Piskel.
+## One small bug I notice is that when the user clicks "Play Again!" and the app is returning to the WelcomeScreen, the first monster briefly appears. There was also a bug that did not allow the user to use the fire attack when the user's health was below the monster's strength, but I believe I was able to fix that. Other than that, I do not believe I found other bugs.

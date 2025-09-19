@@ -108,7 +108,7 @@ function gameReducer(state, action) {
         const monsterHealth = monsterKey === 'monster1' ? m.monsterHealth : m.health;
         const monsterStrength = monsterKey === 'monster1' ? m.monsterStrength : m.strength;
 
-        if (state.playerMagic - 3 < 0 || state.playerHealth - monsterStrength <= 0 || monsterHealth <= 0) {
+        if (state.playerMagic - 3 < 0 || monsterHealth <= 0 || state.playerHealth <= 0) {
             return state;
         }
         return {
