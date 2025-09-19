@@ -111,19 +111,6 @@ function gameReducer(state, action) {
         if (state.playerMagic - 3 < 0 || state.playerHealth - monsterStrength <= 0 || monsterHealth <= 0) {
             return state;
         }
-        if (monsterHealth / 2.0 < 0) {
-            return {
-              ...state,
-              [monsterKey]: {
-                ...m,
-                ...(monsterKey === 'monster1' ? { monsterHealth: 0 } : { health: 0 })
-              },
-              playerMagic: state.playerMagic - 3,
-              playerHealth: state.playerHealth - monsterStrength,
-              lastAction: 'fire',
-              points: state.points + 5
-            };
-        }
         return {
             ...state,
             [monsterKey]: {
@@ -140,7 +127,7 @@ function gameReducer(state, action) {
     const m = state[monsterKey];
     const monsterStrength = monsterKey === 'monster1' ? m.monsterStrength : m.strength;
     const monsterHealth = monsterKey === 'monster1' ? m.monsterHealth : m.health;
-    if (state.playerMagic - 1 < 0 || state.playerHealth + 7 < 1 || state.playerHealth - monsterStrength <= 0 || monsterHealth <= 0) {
+    if (state.playerMagic <= 0 || state.playerHealth <= 0 || monsterHealth <= 0) {
       return state;
     }
     return {

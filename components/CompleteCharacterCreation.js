@@ -16,17 +16,33 @@ const CompleteCharacterCreation = (props) => {
         }
     }
 
+    function getCompleteCharacterCreationButtonText() {
+        if (props.state.currentMonster === 1) {
+            return 'Complete Character Creation!';
+        }
+        else if (props.state.currentMonster === 2) {
+            return 'Complete Character Upgrades!';
+        }
+    }
+
     if (props.state.points > 0) {
         return (
             <Text style={styles.text}>Spend all your points to continue!</Text>
         )
     }
-    else if (props.state.points === 0) {
+    else if (props.state.points === 0 && !characterName.trim()) {
         return (
             <View>
                 {getTextInput()}
-                <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('CombatScreen', { characterName })}>
-                    <Text style={styles.text}>Click Me to Embark on your Journey!</Text>
+            </View>
+        )
+    }
+    else if (props.state.points === 0 && characterName.trim()) {
+        return (
+            <View>
+                {getTextInput()}
+                <TouchableOpacity style={styles.button} onPress={() => {props.navigation.navigate('CombatScreen', {characterName: characterName});}}>
+                    <Text style={styles.text}>{getCompleteCharacterCreationButtonText()}</Text>
                 </TouchableOpacity>
             </View>
         )
